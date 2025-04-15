@@ -31,3 +31,5 @@ C:\Users\st310-05\Desktop\lll\Apteka\bin\Debug\net8.0-windows\runtimes\win\lib\n
 C:\Users\st310-05\Desktop\lll\Apteka\obj\Debug\net8.0-windows\Apteka.csproj.AssemblyReference.cache
 C:\Users\st310-05\Desktop\lll\Apteka\obj\Debug\net8.0-windows\Apteka.csproj.Up2Date
 C:\Users\st310-05\Desktop\lll\Apteka\obj\Debug\net8.0-windows\Apteka.AddBookForm.resources
+C:\Users\st310-05\Desktop\lll\Apteka\obj\Debug\net8.0-windows\Apteka.sourcelink.json
+C:\Users\st310-05\Desktop\lll\Apteka\obj\Debug\net8.0-windows\Apteka.RegistrationForm.resources

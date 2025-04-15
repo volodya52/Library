@@ -39,6 +39,8 @@
             label2 = new Label( );
             genreComboBox = new ComboBox( );
             button1 = new Button( );
+            deleteButton = new Button( );
+            editButton = new Button( );
             ((System.ComponentModel.ISupportInitialize) booksDataGridView).BeginInit( );
             ((System.ComponentModel.ISupportInitialize) coverPictureBox).BeginInit( );
             SuspendLayout( );
@@ -83,6 +85,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point,  204);
+            label1.ForeColor = SystemColors.ActiveCaptionText;
             label1.Location = new Point(23, 134);
             label1.Name = "label1";
             label1.Size = new Size(107, 41);
@@ -91,20 +94,22 @@
             // 
             // searchButton
             // 
+            searchButton.BackColor = SystemColors.ControlLightLight;
+            searchButton.FlatStyle = FlatStyle.Flat;
             searchButton.Location = new Point(747, 136);
             searchButton.Name = "searchButton";
             searchButton.Size = new Size(94, 29);
             searchButton.TabIndex = 5;
             searchButton.Text = "Найти";
-            searchButton.UseVisualStyleBackColor = true;
+            searchButton.UseVisualStyleBackColor = false;
             searchButton.Click += searchButton_Click_1;
             // 
             // coverPictureBox
             // 
-            coverPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
             coverPictureBox.Location = new Point(1030, 228);
             coverPictureBox.Name = "coverPictureBox";
             coverPictureBox.Size = new Size(475, 500);
+            coverPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
             coverPictureBox.TabIndex = 6;
             coverPictureBox.TabStop = false;
             // 
@@ -120,6 +125,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point,  204);
+            label2.ForeColor = SystemColors.ActiveCaptionText;
             label2.Location = new Point(23, 66);
             label2.Name = "label2";
             label2.Size = new Size(101, 41);
@@ -137,19 +143,48 @@
             // 
             // button1
             // 
+            button1.BackColor = SystemColors.ButtonHighlight;
+            button1.FlatStyle = FlatStyle.Flat;
             button1.Location = new Point(1352, 27);
             button1.Name = "button1";
             button1.Size = new Size(153, 29);
             button1.TabIndex = 10;
             button1.Text = "Добавить книгу";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
+            // 
+            // deleteButton
+            // 
+            deleteButton.BackColor = SystemColors.ControlLightLight;
+            deleteButton.FlatStyle = FlatStyle.Flat;
+            deleteButton.Location = new Point(208, 734);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(94, 29);
+            deleteButton.TabIndex = 11;
+            deleteButton.Text = "Удалить";
+            deleteButton.UseVisualStyleBackColor = false;
+            deleteButton.Click += deleteButton_Click;
+            // 
+            // editButton
+            // 
+            editButton.BackColor = SystemColors.ControlLightLight;
+            editButton.FlatStyle = FlatStyle.Flat;
+            editButton.Location = new Point(23, 734);
+            editButton.Name = "editButton";
+            editButton.Size = new Size(135, 29);
+            editButton.TabIndex = 12;
+            editButton.Text = "Редактировать";
+            editButton.UseVisualStyleBackColor = false;
+            editButton.Click += editButton_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(1557, 775);
+            Controls.Add(editButton);
+            Controls.Add(deleteButton);
             Controls.Add(button1);
             Controls.Add(label2);
             Controls.Add(genreComboBox);
@@ -182,5 +217,7 @@
         private Label label2;
         private ComboBox genreComboBox;
         private Button button1;
+        private Button deleteButton;
+        private Button editButton;
     }
 }

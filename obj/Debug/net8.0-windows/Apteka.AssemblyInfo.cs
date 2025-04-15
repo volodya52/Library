@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Apteka")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9689786cb9780e7326da90684a57444c358b31a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Apteka")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Apteka")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

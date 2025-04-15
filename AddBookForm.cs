@@ -14,7 +14,10 @@ namespace Apteka
     public partial class AddBookForm :Form
     {
         private SQLiteConnection connection;
+        private int? bookId;
+        private string selectedImagePath;
 
+        // Элементы формы
         private TextBox titleTextBox;
         private NumericUpDown yearNumericUpDown;
         private ComboBox genreComboBox;
@@ -24,13 +27,108 @@ namespace Apteka
         private Button selectCoverButton;
         private Button saveButton;
         private Button cancelButton;
-        public AddBookForm (SQLiteConnection connection)
+
+        public AddBookForm (SQLiteConnection connection, int? id = null)
         {
-            InitializeComponent( );
             this.connection = connection;
+            this.bookId = id;
             InitializeComponents( );
             LoadGenres( );
             LoadAuthors( );
+
+            if (bookId.HasValue)
+            {
+                this.Text = "Редактировать книгу";
+                LoadBookData( );
+            }
+            else
+            {
+                this.Text = "Добавить новую книгу";
+            }
+        }
+        private void SaveBook ()
+        {
+            if (string.IsNullOrWhiteSpace(titleTextBox.Text) ||
+                genreComboBox.SelectedItem == null ||
+                authorComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Заполните обязательные поля (Название, Жанр и Автор)");
+                return;
+            }
+
+            string query;
+            if (bookId.HasValue)
+            {
+                query = @"
+                    UPDATE Книги SET 
+                        Название = @title, 
+                        Год_издания = @year, 
+                        Жанр = @genre, 
+                        Автор = @author, 
+                        Описание = @description, 
+                        Обложка = @cover
+                    WHERE ID = @id";
+            }
+            else
+            {
+                query = @"
+                    INSERT INTO Книги 
+                        (Название, Год_издания, Жанр, Автор, Описание, Обложка) 
+                    VALUES 
+                        (@title, @year, @genre, @author, @description, @cover)";
+            }
+
+            using (SQLiteCommand cmd = new SQLiteCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@title", titleTextBox.Text);
+                cmd.Parameters.AddWithValue("@year", (int) yearNumericUpDown.Value);
+                cmd.Parameters.AddWithValue("@genre", genreComboBox.SelectedItem.ToString( ));
+                cmd.Parameters.AddWithValue("@author", authorComboBox.SelectedItem.ToString( ));
+                cmd.Parameters.AddWithValue("@description", descriptionTextBox.Text);
+                cmd.Parameters.AddWithValue("@cover", selectedImagePath ?? "");
+
+                if (bookId.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@id", bookId.Value);
+                }
+
+                try
+                {
+                    cmd.ExecuteNonQuery( );
+                    this.DialogResult = DialogResult.OK;
+                    this.Close( );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при сохранении книги: {ex.Message}");
+                }
+            }
+        }
+        private void LoadBookData ()
+        {
+            string query = "SELECT * FROM Книги WHERE ID = @id";
+            using (SQLiteCommand cmd = new SQLiteCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@id", bookId.Value);
+                using (SQLiteDataReader reader = cmd.ExecuteReader( ))
+                {
+                    if (reader.Read( ))
+                    {
+                        titleTextBox.Text = reader [ "Название" ].ToString( );
+                        yearNumericUpDown.Value = Convert.ToInt32(reader [ "Год_издания" ]);
+                        genreComboBox.SelectedItem = reader [ "Жанр" ].ToString( );
+                        authorComboBox.SelectedItem = reader [ "Автор" ].ToString( );
+                        descriptionTextBox.Text = reader [ "Описание" ].ToString( );
+
+                        string imagePath = reader [ "Обложка" ].ToString( );
+                        if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+                        {
+                            coverPictureBox.Image = Image.FromFile(imagePath);
+                            selectedImagePath = imagePath;
+                        }
+                    }
+                }
+            }
         }
         private void InitializeComponents ()
         {
